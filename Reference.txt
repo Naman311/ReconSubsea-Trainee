@@ -1,0 +1,5 @@
+If your basics are not clear, then go through these playlists and courses 
+
+Arduino- https://www.youtube.com/watch?v=09zfRaLEasY
+Python- https://www.coursera.org/learn/python
+Github- https://www.youtube.com/watch?v=cEGIFZDyszA&list=PL6gx4Cwl9DGAKWClAD_iKpNC0bGHxGhcx
