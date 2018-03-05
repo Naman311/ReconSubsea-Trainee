@@ -1,8 +1,8 @@
 Please follow these instructions before committing any change-
 (I recommend you to complete the github course first and then do this)
-1. first of all do fetch origin to get your local host updates. 
-2. After downloading copy your code folder in sensor directory which is already present.
+1. first of all, do fetch origin to get your local host updated. 
+2. After downloading updates,copy your code folder in sensor directory which is already present in this repo.
 3. Your folder should be named as sensor name followed by your name.
-4. Inside the folder upload code with documentation written by you on word.
-5. After this commit the changes with relevant name and description.
-6. sync commits to master.
+4. Inside the folder upload the code with documentation written by you in ms word.
+5. After this, commit the changes with relevant name and description.
+6. sync the commits to master.
