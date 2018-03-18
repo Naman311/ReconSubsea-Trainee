@@ -1,9 +1,11 @@
 int cycle,dist;
+
+
 void setup() 
 {
   Serial.begin(9600);
-  pinMode(7,OUTPUT);
-  pinMode(8,INPUT);
+  pinMode(7,OUTPUT);   //echo
+  pinMode(8,INPUT);    //trigger
   pinMode(LED_BUILTIN, OUTPUT);
 
 }
@@ -20,14 +22,10 @@ void loop()
   
 
   cycle = pulseIn(8,HIGH);
-  // Serial.println("cycle ");
-   //Serial.println(cycle);
-    //Serial.println("\n");
   dist = int(0.017*cycle);
   Serial.println(dist);
-  //delay(250);
 
-  if(dist>=15)
+  if(dist<=15)
   {
    digitalWrite(LED_BUILTIN,HIGH);
   }
