@@ -1,0 +1,18 @@
+#include <ESP8266WiFi.h>
+const char* ssid="Aman104 iPhone";
+const char* password="aman131014";
+void setup() {
+  Serial.begin(115200);
+  pinMode(5,OUTPUT); //GPIO5 Digital Pin D1
+  WiFi.begin(ssid,password);
+}
+
+void loop() {
+  if(WiFi.status() == WL_CONNECTED){
+    digitalWrite(5,HIGH);
+  }
+  else
+  {
+    digitalWrite(5,LOW);
+  }
+}
