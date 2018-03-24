@@ -1,0 +1,26 @@
+#include<ESP8266WiFi.h>
+const char* ssid="OnePlus 5";                   //declaring ssid to be checked and to be connected to
+const char* pass="HARSHSAX";                    //password of the ssid declayed above
+int led=5;                                      //setting led at pin 5
+
+void setup()
+{
+  Serial.begin(115200);       
+  WiFi.begin(ssid,pass);                        //searching ssid at checking and connecting to the wifi
+  pinMode(led,OUTPUT);           
+  
+}
+
+void loop()
+{
+  if(WiFi.status()!=WL_CONNECTED)                //if hotspot not connected then led wont glow
+  {
+    digitalWrite(led,LOW);
+    delay(500);
+  }
+  else if(WiFi.status()==WL_CONNECTED)           //if fotspot is connected led will glow
+  {
+    digitalWrite(led,HIGH);
+    delay(500);
+  }
+}
