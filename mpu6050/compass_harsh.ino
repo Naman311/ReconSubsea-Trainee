@@ -60,21 +60,29 @@ void loop()
    //delay(100);
 
 
-   if(anglez==angley)
+   if(anglez>=angley&&(anglez<angley+1))
    {
     Serial.print("N");
+    Serial.print(angtlez);
+     Serial.println("\n");
    }
-    else if(anglez==45)
+    else if(anglez>=45&&angle<46)
    {
     Serial.print("E");
+    Serial.print(angtlez);
+      Serial.println("\n");
    }
-   else if(anglez==180)
+   else if(anglez>=180&&anglez<181)
    {
     Serial.print("S");
+   Serial.print(angtlez);
+     Serial.println("\n");
    }
-   else if(anglez>=225&&anglez<=226)
+   else if(anglez>=225&&anglez<226)
    {
     Serial.print("W");
+     Serial.print(angtlez);
+   Serial.println("\n");
    }
    else
    {
