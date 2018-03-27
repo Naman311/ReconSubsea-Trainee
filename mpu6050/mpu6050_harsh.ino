@@ -111,7 +111,7 @@ void setup()
       gxo=gxo+gx;
       gyo=gyo+gy;
       gzo=gzo+gz;
-      delay(5);
+      //delay(5);
    }
  
  gxo=gxo/2000;
