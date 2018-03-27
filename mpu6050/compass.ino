@@ -1,0 +1,119 @@
+#include<Wire.h>
+#include<math.h>
+int gx,gy,gz,ax,ay,az,gxo,gyo,gzo,t;
+float anglex,angley,anglez;
+void setup() 
+{
+  Wire.begin();
+ Serial.begin(38400);
+
+ //CALLING mpu_setup and calculating offsets
+ mpu_setup();
+ for(int i=0;i<1000;i++)
+   {
+      mpu_read();
+      gxo=gxo+gx;
+      gyo=gyo+gy;
+      gzo=gzo+gz;
+      //delay(10);
+   }
+ 
+ gxo=gxo/1000;
+ gyo=gyo/1000;
+ gzo=gzo/1000;
+ 
+}
+
+
+void loop() 
+
+
+{
+   mpu_read();
+
+
+//subtracting offsets;
+  gx-=gxo;
+  gy-=gyo;
+  gz-=gzo;
+
+//calc angle
+// ideg/s angular velosity sweeps the gyro along any axis at 65.5 as axis output also gyro has maximum operating frequency of 250hz so gyro angle must be raw_value/(250/65.5)
+  anglex+=gx*(0.000061);
+  angley+=gy*(0.000061);
+  anglez+=gz*(0.000061);
+
+
+//now when gyro turns along xaxis, the y axis must be transfered to x and vica versa
+//0.000001066 =(1/250/65.5) * (3.142(PI) / 180degr) The Arduino sin function is in radians
+ // anglex += angley * sin(gz * 0.000001066);               
+  //angley -= anglex * sin(gz * 0.000001066);            
+
+ /*  Serial.print("\nx=");
+   Serial.print(anglex);
+   
+   Serial.print("\ny=");
+   Serial.print(angley);
+   
+   Serial.print("\nz=");
+   Serial.print(anglez);*/
+   //delay(100);
+
+
+   if(anglez==angley)
+   {
+    Serial.print("N");
+   }
+    else if(anglez==45)
+   {
+    Serial.print("E");
+   }
+   else if(anglez==180)
+   {
+    Serial.print("S");
+   }
+   else if(anglez>=225&&anglez<=226)
+   {
+    Serial.print("W");
+   }
+   else
+   {
+    Serial.print(anglez);
+    Serial.println("\n");
+    
+   }
+}
+
+void mpu_read()
+{                                             //Subroutine for reading the raw gyro and accelerometer data
+  Wire.beginTransmission(0x68);                                        //Start communicating with the MPU-6050
+  Wire.write(0x3B);                                                    //Send the requested starting register
+  Wire.endTransmission();                                              //End the transmission
+  Wire.requestFrom(0x68,14);                                           //Request 14 bytes from the MPU-6050
+  while(Wire.available() < 14);                                        //Wait until all the bytes are received
+  ax = Wire.read()<<8|Wire.read();                                  //Add the low and high byte to the acc_x variable
+  ay = Wire.read()<<8|Wire.read();                                  //Add the low and high byte to the acc_y variable
+  az = Wire.read()<<8|Wire.read();                                  //Add the low and high byte to the acc_z variable
+  t = Wire.read()<<8|Wire.read();                            //Add the low and high byte to the temperature variable
+  gx = Wire.read()<<8|Wire.read();                                 //Add the low and high byte to the gyro_x variable
+  gy = Wire.read()<<8|Wire.read();                                 //Add the low and high byte to the gyro_y variable
+  gz = Wire.read()<<8|Wire.read();                                 //Add the low and high byte to the gyro_z variable
+
+}
+void mpu_setup(){
+  //Activate the MPU-6050
+  Wire.beginTransmission(0x68);                                        //Start communicating with the MPU-6050
+  Wire.write(0x6B);                                                    //Send the requested starting register
+  Wire.write(0x00);                                                    //Set the requested starting register
+  Wire.endTransmission();                                              //End the transmission
+  //Configure the accelerometer (+/-8g)
+  Wire.beginTransmission(0x68);                                        //Start communicating with the MPU-6050
+  Wire.write(0x1C);                                                    //Send the requested starting register
+  Wire.write(0x10);                                                    //Set the requested starting register
+  Wire.endTransmission();                                              //End the transmission
+  //Configure the gyro (500dps full scale)
+  Wire.beginTransmission(0x68);                                        //Start communicating with the MPU-6050
+  Wire.write(0x1B);                                                    //Send the requested starting register
+  Wire.write(0x08);                                                    //Set the requested starting register
+  Wire.endTransmission();                                              //End the transmission
+}
